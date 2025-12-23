@@ -1,0 +1,337 @@
+{
+  "id_region": "REG01",
+  "batiments": [
+    {
+      "id_batiment": "BAT001",
+      "type_energie": "electricite",
+      "unite": "KWh",
+      "date_generation": "2025-01-14",
+      "mesures": [
+        {
+          "compteur_id": "MTR0001",
+          "date_mesure": "2025-01-14T08:00:00",
+          "consommation_kWh": 146.7
+        },
+        {
+          "compteur_id": "MTR0001",
+          "date_mesure": "2025-01-14T09:00:00",
+          "consommation_kWh": 142.9
+        },
+        {
+          "compteur_id": "MTR0001",
+          "date_mesure": "2025-01-14T10:00:00",
+          "consommation_kWh": 115.3
+        },
+        {
+          "compteur_id": "MTR0001",
+          "date_mesure": "2025-01-14T11:00:00",
+          "consommation_kWh": 143.5
+        },
+        {
+          "compteur_id": "MTR0001",
+          "date_mesure": "2025-01-14T12:00:00",
+          "consommation_kWh": 132.7
+        },
+        {
+          "compteur_id": "MTR0001",
+          "date_mesure": "2025-01-15T08:00:00",
+          "consommation_kWh": 129.5
+        },
+        {
+          "compteur_id": "MTR0001",
+          "date_mesure": "2025-01-15T09:00:00",
+          "consommation_kWh": 98.8
+        },
+        {
+          "compteur_id": "MTR0001",
+          "date_mesure": "2025-01-15T10:00:00",
+          "consommation_kWh": 91.8
+        },
+        {
+          "compteur_id": "MTR0001",
+          "date_mesure": "2025-01-15T11:00:00",
+          "consommation_kWh": 128.9
+        },
+        {
+          "compteur_id": "MTR0001",
+          "date_mesure": "2025-01-15T12:00:00",
+          "consommation_kWh": 150.9
+        },
+        {
+          "compteur_id": "MTR0001",
+          "date_mesure": "2025-01-16T08:00:00",
+          "consommation_kWh": 110.7
+        },
+        {
+          "compteur_id": "MTR0001",
+          "date_mesure": "2025-01-16T09:00:00",
+          "consommation_kWh": 135.0
+        },
+        {
+          "compteur_id": "MTR0001",
+          "date_mesure": "2025-01-16T10:00:00",
+          "consommation_kWh": 150.8
+        },
+        {
+          "compteur_id": "MTR0001",
+          "date_mesure": "2025-01-16T11:00:00",
+          "consommation_kWh": 144.3
+        },
+        {
+          "compteur_id": "MTR0001",
+          "date_mesure": "2025-01-16T12:00:00",
+          "consommation_kWh": 124.6
+        }
+      ]
+    },
+    {
+      "id_batiment": "BAT002",
+      "type_energie": "electricite",
+      "unite": "KWh",
+      "date_generation": "2025-01-14",
+      "mesures": [
+        {
+          "compteur_id": "MTR0004",
+          "date_mesure": "2025-01-14T08:00:00",
+          "consommation_kWh": 90.7
+        },
+        {
+          "compteur_id": "MTR0004",
+          "date_mesure": "2025-01-14T09:00:00",
+          "consommation_kWh": 124.7
+        },
+        {
+          "compteur_id": "MTR0004",
+          "date_mesure": "2025-01-14T10:00:00",
+          "consommation_kWh": 115.4
+        },
+        {
+          "compteur_id": "MTR0004",
+          "date_mesure": "2025-01-14T11:00:00",
+          "consommation_kWh": 114.1
+        },
+        {
+          "compteur_id": "MTR0004",
+          "date_mesure": "2025-01-14T12:00:00",
+          "consommation_kWh": 92.7
+        },
+        {
+          "compteur_id": "MTR0004",
+          "date_mesure": "2025-01-15T08:00:00",
+          "consommation_kWh": 140.1
+        },
+        {
+          "compteur_id": "MTR0004",
+          "date_mesure": "2025-01-15T09:00:00",
+          "consommation_kWh": 142.2
+        },
+        {
+          "compteur_id": "MTR0004",
+          "date_mesure": "2025-01-15T10:00:00",
+          "consommation_kWh": 115.2
+        },
+        {
+          "compteur_id": "MTR0004",
+          "date_mesure": "2025-01-15T11:00:00",
+          "consommation_kWh": 106.9
+        },
+        {
+          "compteur_id": "MTR0004",
+          "date_mesure": "2025-01-15T12:00:00",
+          "consommation_kWh": 92.1
+        },
+        {
+          "compteur_id": "MTR0004",
+          "date_mesure": "2025-01-16T08:00:00",
+          "consommation_kWh": 97.1
+        },
+        {
+          "compteur_id": "MTR0004",
+          "date_mesure": "2025-01-16T09:00:00",
+          "consommation_kWh": 117.3
+        },
+        {
+          "compteur_id": "MTR0004",
+          "date_mesure": "2025-01-16T10:00:00",
+          "consommation_kWh": 111.2
+        },
+        {
+          "compteur_id": "MTR0004",
+          "date_mesure": "2025-01-16T11:00:00",
+          "consommation_kWh": 81.6
+        },
+        {
+          "compteur_id": "MTR0004",
+          "date_mesure": "2025-01-16T12:00:00",
+          "consommation_kWh": 118.2
+        }
+      ]
+    },
+    {
+      "id_batiment": "BAT003",
+      "type_energie": "electricite",
+      "unite": "KWh",
+      "date_generation": "2025-01-14",
+      "mesures": [
+        {
+          "compteur_id": "MTR0007",
+          "date_mesure": "2025-01-14T08:00:00",
+          "consommation_kWh": 111.2
+        },
+        {
+          "compteur_id": "MTR0007",
+          "date_mesure": "2025-01-14T09:00:00",
+          "consommation_kWh": 123.1
+        },
+        {
+          "compteur_id": "MTR0007",
+          "date_mesure": "2025-01-14T10:00:00",
+          "consommation_kWh": 151.8
+        },
+        {
+          "compteur_id": "MTR0007",
+          "date_mesure": "2025-01-14T11:00:00",
+          "consommation_kWh": 118.9
+        },
+        {
+          "compteur_id": "MTR0007",
+          "date_mesure": "2025-01-14T12:00:00",
+          "consommation_kWh": 143.9
+        },
+        {
+          "compteur_id": "MTR0007",
+          "date_mesure": "2025-01-15T08:00:00",
+          "consommation_kWh": 153.6
+        },
+        {
+          "compteur_id": "MTR0007",
+          "date_mesure": "2025-01-15T09:00:00",
+          "consommation_kWh": 152.6
+        },
+        {
+          "compteur_id": "MTR0007",
+          "date_mesure": "2025-01-15T10:00:00",
+          "consommation_kWh": 86.7
+        },
+        {
+          "compteur_id": "MTR0007",
+          "date_mesure": "2025-01-15T11:00:00",
+          "consommation_kWh": 94.5
+        },
+        {
+          "compteur_id": "MTR0007",
+          "date_mesure": "2025-01-15T12:00:00",
+          "consommation_kWh": 116.4
+        },
+        {
+          "compteur_id": "MTR0007",
+          "date_mesure": "2025-01-16T08:00:00",
+          "consommation_kWh": 102.3
+        },
+        {
+          "compteur_id": "MTR0007",
+          "date_mesure": "2025-01-16T09:00:00",
+          "consommation_kWh": 146.8
+        },
+        {
+          "compteur_id": "MTR0007",
+          "date_mesure": "2025-01-16T10:00:00",
+          "consommation_kWh": 84.2
+        },
+        {
+          "compteur_id": "MTR0007",
+          "date_mesure": "2025-01-16T11:00:00",
+          "consommation_kWh": 85.5
+        },
+        {
+          "compteur_id": "MTR0007",
+          "date_mesure": "2025-01-16T12:00:00",
+          "consommation_kWh": 82.5
+        }
+      ]
+    },
+    {
+      "id_batiment": "BAT004",
+      "type_energie": "electricite",
+      "unite": "KWh",
+      "date_generation": "2025-01-14",
+      "mesures": [
+        {
+          "compteur_id": "MTR0010",
+          "date_mesure": "2025-01-14T08:00:00",
+          "consommation_kWh": 129.7
+        },
+        {
+          "compteur_id": "MTR0010",
+          "date_mesure": "2025-01-14T09:00:00",
+          "consommation_kWh": 89.2
+        },
+        {
+          "compteur_id": "MTR0010",
+          "date_mesure": "2025-01-14T10:00:00",
+          "consommation_kWh": 100.5
+        },
+        {
+          "compteur_id": "MTR0010",
+          "date_mesure": "2025-01-14T11:00:00",
+          "consommation_kWh": 157.1
+        },
+        {
+          "compteur_id": "MTR0010",
+          "date_mesure": "2025-01-14T12:00:00",
+          "consommation_kWh": 93.1
+        },
+        {
+          "compteur_id": "MTR0010",
+          "date_mesure": "2025-01-15T08:00:00",
+          "consommation_kWh": 154.3
+        },
+        {
+          "compteur_id": "MTR0010",
+          "date_mesure": "2025-01-15T09:00:00",
+          "consommation_kWh": 110.0
+        },
+        {
+          "compteur_id": "MTR0010",
+          "date_mesure": "2025-01-15T10:00:00",
+          "consommation_kWh": 127.4
+        },
+        {
+          "compteur_id": "MTR0010",
+          "date_mesure": "2025-01-15T11:00:00",
+          "consommation_kWh": 135.8
+        },
+        {
+          "compteur_id": "MTR0010",
+          "date_mesure": "2025-01-15T12:00:00",
+          "consommation_kWh": 144.4
+        },
+        {
+          "compteur_id": "MTR0010",
+          "date_mesure": "2025-01-16T08:00:00",
+          "consommation_kWh": 83.3
+        },
+        {
+          "compteur_id": "MTR0010",
+          "date_mesure": "2025-01-16T09:00:00",
+          "consommation_kWh": 85.5
+        },
+        {
+          "compteur_id": "MTR0010",
+          "date_mesure": "2025-01-16T10:00:00",
+          "consommation_kWh": 113.6
+        },
+        {
+          "compteur_id": "MTR0010",
+          "date_mesure": "2025-01-16T11:00:00",
+          "consommation_kWh": 109.0
+        },
+        {
+          "compteur_id": "MTR0010",
+          "date_mesure": "2025-01-16T12:00:00",
+          "consommation_kWh": 92.2
+        }
+      ]
+    }
+  ]
+}

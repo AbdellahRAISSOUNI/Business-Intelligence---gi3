@@ -1,0 +1,6 @@
+client_id,client_name,contact_email,contact_phone,billing_address
+CLI01,Client-1,client@example.com,+212695822412,"38 Avenue BI, City 1"
+CLI02,Client-2,client@example.com,+212613356886,"199 Avenue BI, City 2"
+CLI03,Client-3,client@example.com,+212646913810,"72 Avenue BI, City 3"
+CLI04,Client-4,client@example.com,+212639958838,"45 Avenue BI, City 4"
+CLI05,Client-5,client@example.com,+212623756669,"183 Avenue BI, City 5"

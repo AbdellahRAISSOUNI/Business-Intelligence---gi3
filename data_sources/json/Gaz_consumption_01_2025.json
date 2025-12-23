@@ -1,0 +1,337 @@
+{
+  "id_region": "REG01",
+  "batiments": [
+    {
+      "id_batiment": "BAT001",
+      "type_energie": "gaz",
+      "unite": "m3",
+      "date_generation": "2025-01-14",
+      "mesures": [
+        {
+          "compteur_id": "MTR0003",
+          "date_mesure": "2025-01-14T08:00:00",
+          "consommation_m3": 5.61
+        },
+        {
+          "compteur_id": "MTR0003",
+          "date_mesure": "2025-01-14T09:00:00",
+          "consommation_m3": 4.56
+        },
+        {
+          "compteur_id": "MTR0003",
+          "date_mesure": "2025-01-14T10:00:00",
+          "consommation_m3": 4.33
+        },
+        {
+          "compteur_id": "MTR0003",
+          "date_mesure": "2025-01-14T11:00:00",
+          "consommation_m3": 3.39
+        },
+        {
+          "compteur_id": "MTR0003",
+          "date_mesure": "2025-01-14T12:00:00",
+          "consommation_m3": 4.45
+        },
+        {
+          "compteur_id": "MTR0003",
+          "date_mesure": "2025-01-15T08:00:00",
+          "consommation_m3": 5.4
+        },
+        {
+          "compteur_id": "MTR0003",
+          "date_mesure": "2025-01-15T09:00:00",
+          "consommation_m3": 3.04
+        },
+        {
+          "compteur_id": "MTR0003",
+          "date_mesure": "2025-01-15T10:00:00",
+          "consommation_m3": 5.52
+        },
+        {
+          "compteur_id": "MTR0003",
+          "date_mesure": "2025-01-15T11:00:00",
+          "consommation_m3": 4.94
+        },
+        {
+          "compteur_id": "MTR0003",
+          "date_mesure": "2025-01-15T12:00:00",
+          "consommation_m3": 3.88
+        },
+        {
+          "compteur_id": "MTR0003",
+          "date_mesure": "2025-01-16T08:00:00",
+          "consommation_m3": 4.45
+        },
+        {
+          "compteur_id": "MTR0003",
+          "date_mesure": "2025-01-16T09:00:00",
+          "consommation_m3": 3.43
+        },
+        {
+          "compteur_id": "MTR0003",
+          "date_mesure": "2025-01-16T10:00:00",
+          "consommation_m3": 5.24
+        },
+        {
+          "compteur_id": "MTR0003",
+          "date_mesure": "2025-01-16T11:00:00",
+          "consommation_m3": 5.32
+        },
+        {
+          "compteur_id": "MTR0003",
+          "date_mesure": "2025-01-16T12:00:00",
+          "consommation_m3": 5.36
+        }
+      ]
+    },
+    {
+      "id_batiment": "BAT002",
+      "type_energie": "gaz",
+      "unite": "m3",
+      "date_generation": "2025-01-14",
+      "mesures": [
+        {
+          "compteur_id": "MTR0006",
+          "date_mesure": "2025-01-14T08:00:00",
+          "consommation_m3": 5.18
+        },
+        {
+          "compteur_id": "MTR0006",
+          "date_mesure": "2025-01-14T09:00:00",
+          "consommation_m3": 4.98
+        },
+        {
+          "compteur_id": "MTR0006",
+          "date_mesure": "2025-01-14T10:00:00",
+          "consommation_m3": 4.45
+        },
+        {
+          "compteur_id": "MTR0006",
+          "date_mesure": "2025-01-14T11:00:00",
+          "consommation_m3": 4.13
+        },
+        {
+          "compteur_id": "MTR0006",
+          "date_mesure": "2025-01-14T12:00:00",
+          "consommation_m3": 5.94
+        },
+        {
+          "compteur_id": "MTR0006",
+          "date_mesure": "2025-01-15T08:00:00",
+          "consommation_m3": 5.57
+        },
+        {
+          "compteur_id": "MTR0006",
+          "date_mesure": "2025-01-15T09:00:00",
+          "consommation_m3": 4.42
+        },
+        {
+          "compteur_id": "MTR0006",
+          "date_mesure": "2025-01-15T10:00:00",
+          "consommation_m3": 5.97
+        },
+        {
+          "compteur_id": "MTR0006",
+          "date_mesure": "2025-01-15T11:00:00",
+          "consommation_m3": 3.46
+        },
+        {
+          "compteur_id": "MTR0006",
+          "date_mesure": "2025-01-15T12:00:00",
+          "consommation_m3": 5.9
+        },
+        {
+          "compteur_id": "MTR0006",
+          "date_mesure": "2025-01-16T08:00:00",
+          "consommation_m3": 5.54
+        },
+        {
+          "compteur_id": "MTR0006",
+          "date_mesure": "2025-01-16T09:00:00",
+          "consommation_m3": 3.05
+        },
+        {
+          "compteur_id": "MTR0006",
+          "date_mesure": "2025-01-16T10:00:00",
+          "consommation_m3": 5.91
+        },
+        {
+          "compteur_id": "MTR0006",
+          "date_mesure": "2025-01-16T11:00:00",
+          "consommation_m3": 3.8
+        },
+        {
+          "compteur_id": "MTR0006",
+          "date_mesure": "2025-01-16T12:00:00",
+          "consommation_m3": 3.24
+        }
+      ]
+    },
+    {
+      "id_batiment": "BAT003",
+      "type_energie": "gaz",
+      "unite": "m3",
+      "date_generation": "2025-01-14",
+      "mesures": [
+        {
+          "compteur_id": "MTR0009",
+          "date_mesure": "2025-01-14T08:00:00",
+          "consommation_m3": 4.6
+        },
+        {
+          "compteur_id": "MTR0009",
+          "date_mesure": "2025-01-14T09:00:00",
+          "consommation_m3": 5.66
+        },
+        {
+          "compteur_id": "MTR0009",
+          "date_mesure": "2025-01-14T10:00:00",
+          "consommation_m3": 4.85
+        },
+        {
+          "compteur_id": "MTR0009",
+          "date_mesure": "2025-01-14T11:00:00",
+          "consommation_m3": 3.86
+        },
+        {
+          "compteur_id": "MTR0009",
+          "date_mesure": "2025-01-14T12:00:00",
+          "consommation_m3": 5.94
+        },
+        {
+          "compteur_id": "MTR0009",
+          "date_mesure": "2025-01-15T08:00:00",
+          "consommation_m3": 3.3
+        },
+        {
+          "compteur_id": "MTR0009",
+          "date_mesure": "2025-01-15T09:00:00",
+          "consommation_m3": 3.09
+        },
+        {
+          "compteur_id": "MTR0009",
+          "date_mesure": "2025-01-15T10:00:00",
+          "consommation_m3": 4.08
+        },
+        {
+          "compteur_id": "MTR0009",
+          "date_mesure": "2025-01-15T11:00:00",
+          "consommation_m3": 4.24
+        },
+        {
+          "compteur_id": "MTR0009",
+          "date_mesure": "2025-01-15T12:00:00",
+          "consommation_m3": 3.53
+        },
+        {
+          "compteur_id": "MTR0009",
+          "date_mesure": "2025-01-16T08:00:00",
+          "consommation_m3": 5.05
+        },
+        {
+          "compteur_id": "MTR0009",
+          "date_mesure": "2025-01-16T09:00:00",
+          "consommation_m3": 3.7
+        },
+        {
+          "compteur_id": "MTR0009",
+          "date_mesure": "2025-01-16T10:00:00",
+          "consommation_m3": 5.0
+        },
+        {
+          "compteur_id": "MTR0009",
+          "date_mesure": "2025-01-16T11:00:00",
+          "consommation_m3": 3.86
+        },
+        {
+          "compteur_id": "MTR0009",
+          "date_mesure": "2025-01-16T12:00:00",
+          "consommation_m3": 5.84
+        }
+      ]
+    },
+    {
+      "id_batiment": "BAT004",
+      "type_energie": "gaz",
+      "unite": "m3",
+      "date_generation": "2025-01-14",
+      "mesures": [
+        {
+          "compteur_id": "MTR0012",
+          "date_mesure": "2025-01-14T08:00:00",
+          "consommation_m3": 5.89
+        },
+        {
+          "compteur_id": "MTR0012",
+          "date_mesure": "2025-01-14T09:00:00",
+          "consommation_m3": 3.91
+        },
+        {
+          "compteur_id": "MTR0012",
+          "date_mesure": "2025-01-14T10:00:00",
+          "consommation_m3": 3.32
+        },
+        {
+          "compteur_id": "MTR0012",
+          "date_mesure": "2025-01-14T11:00:00",
+          "consommation_m3": 3.89
+        },
+        {
+          "compteur_id": "MTR0012",
+          "date_mesure": "2025-01-14T12:00:00",
+          "consommation_m3": 5.49
+        },
+        {
+          "compteur_id": "MTR0012",
+          "date_mesure": "2025-01-15T08:00:00",
+          "consommation_m3": 5.6
+        },
+        {
+          "compteur_id": "MTR0012",
+          "date_mesure": "2025-01-15T09:00:00",
+          "consommation_m3": 5.73
+        },
+        {
+          "compteur_id": "MTR0012",
+          "date_mesure": "2025-01-15T10:00:00",
+          "consommation_m3": 5.71
+        },
+        {
+          "compteur_id": "MTR0012",
+          "date_mesure": "2025-01-15T11:00:00",
+          "consommation_m3": 5.41
+        },
+        {
+          "compteur_id": "MTR0012",
+          "date_mesure": "2025-01-15T12:00:00",
+          "consommation_m3": 3.75
+        },
+        {
+          "compteur_id": "MTR0012",
+          "date_mesure": "2025-01-16T08:00:00",
+          "consommation_m3": 5.04
+        },
+        {
+          "compteur_id": "MTR0012",
+          "date_mesure": "2025-01-16T09:00:00",
+          "consommation_m3": 4.88
+        },
+        {
+          "compteur_id": "MTR0012",
+          "date_mesure": "2025-01-16T10:00:00",
+          "consommation_m3": 3.1
+        },
+        {
+          "compteur_id": "MTR0012",
+          "date_mesure": "2025-01-16T11:00:00",
+          "consommation_m3": 5.73
+        },
+        {
+          "compteur_id": "MTR0012",
+          "date_mesure": "2025-01-16T12:00:00",
+          "consommation_m3": 3.6
+        }
+      ]
+    }
+  ]
+}
