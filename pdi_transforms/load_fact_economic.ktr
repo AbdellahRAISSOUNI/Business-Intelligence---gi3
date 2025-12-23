@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<transformation>
+  <info>
+    <name>load_fact_economic</name>
+    <description>Load fact_economic_profitability from operational database (invoices, invoice_lines, payments)</description>
+    <extended_description>Loads economic profitability data with revenue, margin, payment rate calculations</extended_description>
+    <trans_version/>
+    <trans_type>Normal</trans_type>
+    <directory>/</directory>
+    <parameters/>
+    <log>
+      <trans-log-table>
+        <connection/>
+        <schema/>
+        <table/>
+        <field><id>ID_BATCH</id><enabled>Y</enabled><name>ID_BATCH</name></field>
+        <field><id>CHANNEL_ID</id><enabled>Y</enabled><name>CHANNEL_ID</name></field>
+        <field><id>TRANSNAME</id><enabled>Y</enabled><name>TRANSNAME</name></field>
+        <field><id>STATUS</id><enabled>Y</enabled><name>STATUS</name></field>
+        <field><id>LINES_READ</id><enabled>Y</enabled><name>LINES_READ</name><subject/></field>
+        <field><id>LINES_WRITTEN</id><enabled>Y</enabled><name>LINES_WRITTEN</name><subject/></field>
+        <field><id>LINES_UPDATED</id><enabled>Y</enabled><name>LINES_UPDATED</name><subject/></field>
+        <field><id>LINES_INPUT</id><enabled>Y</enabled><name>LINES_INPUT</name><subject/></field>
+        <field><id>LINES_OUTPUT</id><enabled>Y</enabled><name>LINES_OUTPUT</name><subject/></field>
+        <field><id>LINES_REJECTED</id><enabled>Y</enabled><name>LINES_REJECTED</name><subject/></field>
+        <field><id>ERRORS</id><enabled>Y</enabled><name>ERRORS</name></field>
+        <field><id>STARTDATE</id><enabled>Y</enabled><name>STARTDATE</name></field>
+        <field><id>ENDDATE</id><enabled>Y</enabled><name>ENDDATE</name></field>
+        <field><id>LOGDATE</id><enabled>Y</enabled><name>LOGDATE</name></field>
+        <field><id>DEPDATE</id><enabled>Y</enabled><name>DEPDATE</name></field>
+        <field><id>REPLAYDATE</id><enabled>Y</enabled><name>REPLAYDATE</name></field>
+        <field><id>LOG_FIELD</id><enabled>Y</enabled><name>LOG_FIELD</name></field>
+        <field><id>EXECUTING_SERVER</id><enabled>N</enabled><name>EXECUTING_SERVER</name></field>
+        <field><id>EXECUTING_USER</id><enabled>N</enabled><name>EXECUTING_USER</name></field>
+        <field><id>CLIENT</id><enabled>N</enabled><name>CLIENT</name></field>
+        <size_limit_lines/>
+        <interval/>
+        <timeout_days/>
+      </trans-log-table>
+    </log>
+    <maxdate>
+      <connection/>
+      <table/>
+      <field/>
+      <offset>0.0</offset>
+      <maxdiff>0.0</maxdiff>
+    </maxdate>
+    <size_rowset>10000</size_rowset>
+    <sleep_time_empty>50</sleep_time_empty>
+    <sleep_time_full>50</sleep_time_full>
+    <unique_connections>N</unique_connections>
+    <feedback_shown>Y</feedback_shown>
+    <feedback_size>50000</feedback_size>
+    <using_thread_priorities>Y</using_thread_priorities>
+    <shared_objects_file/>
+    <capture_step_performance>N</capture_step_performance>
+    <step_performance_capturing_delay>1000</step_performance_capturing_delay>
+    <step_performance_capturing_size_limit>100</step_performance_capturing_size_limit>
+    <dependencies/>
+    <partitionschemas/>
+    <slaveservers/>
+    <clusterschemas/>
+    <created_user>-</created_user>
+    <created_date>2025/12/23 19:30:00.000</created_date>
+    <modified_user>-</modified_user>
+    <modified_date>2025/12/23 19:30:00.000</modified_date>
+    <key_for_session_key/>
+    <is_key_private>N</is_key_private>
+  </info>
+
+  <connection>
+    <name>dm_mysql</name>
+    <server>localhost</server>
+    <type>MYSQL</type>
+    <access>Native</access>
+    <database>greencity_dm</database>
+    <port>3306</port>
+    <username>root</username>
+    <password></password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes/>
+  </connection>
+  <connection>
+    <name>op_mysql</name>
+    <server>localhost</server>
+    <type>MYSQL</type>
+    <access>Native</access>
+    <database>greencity_operational</database>
+    <port>3306</port>
+    <username>root</username>
+    <password></password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes/>
+  </connection>
+
+  <notepads/>
+
+  <order>
+    <hop>
+      <from>Load fact economic</from>
+      <to>Show results</to>
+      <enabled>Y</enabled>
+    </hop>
+  </order>
+
+  <step>
+    <name>Load fact economic</name>
+    <type>ExecSQL</type>
+    <description>Load fact_economic_profitability using SQL script</description>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+    <partitioning><method>none</method><schema_name/></partitioning>
+    <connection>dm_mysql</connection>
+    <sql>DROP TEMPORARY TABLE IF EXISTS temp_invoice_payments; CREATE TEMPORARY TABLE temp_invoice_payments AS SELECT invoice_id, SUM(amount_paid) AS total_amount_paid, MAX(payment_date) AS last_payment_date, CAST(MAX(COALESCE(NULLIF(method, ''), 'transfer')) AS CHAR(20)) AS last_payment_method FROM greencity_operational.payments GROUP BY invoice_id; INSERT INTO fact_economic_profitability (invoice_date_key, period_start_key, period_end_key, payment_date_key, client_key, building_key, region_key, energy_type_key, status_key, payment_method_key, revenue_ttc, revenue_ht, consumption_qty, unit_price, invoice_total_ttc, invoice_energy_cost, line_margin, margin_percentage, invoice_amount_paid, line_amount_paid, payment_rate) SELECT dd_invoice.date_key AS invoice_date_key, dd_start.date_key AS period_start_key, dd_end.date_key AS period_end_key, dd_payment.date_key AS payment_date_key, dc.client_key, db.building_key, db.region_key, det.energy_type_key, dis.status_key, dpm.method_key AS payment_method_key, il.line_ttc AS revenue_ttc, il.line_ht AS revenue_ht, il.consumption_qty, il.unit_price, inv.total_ttc AS invoice_total_ttc, inv.energy_cost AS invoice_energy_cost, (il.line_ttc - (il.line_ttc / NULLIF(inv.total_ttc, 0) * inv.energy_cost)) AS line_margin, CASE WHEN il.line_ttc > 0 THEN ((il.line_ttc - (il.line_ttc / NULLIF(inv.total_ttc, 0) * inv.energy_cost)) / il.line_ttc) * 100 ELSE 0 END AS margin_percentage, COALESCE(tip.total_amount_paid, 0) AS invoice_amount_paid, CASE WHEN inv.total_ttc > 0 THEN (il.line_ttc / inv.total_ttc) * COALESCE(tip.total_amount_paid, 0) ELSE 0 END AS line_amount_paid, CASE WHEN inv.total_ttc > 0 THEN (COALESCE(tip.total_amount_paid, 0) / inv.total_ttc) * 100 ELSE 0 END AS payment_rate FROM greencity_operational.invoice_lines il INNER JOIN greencity_operational.invoices inv ON il.invoice_id = inv.invoice_id LEFT JOIN temp_invoice_payments tip ON inv.invoice_id = tip.invoice_id INNER JOIN greencity_dm.dim_date dd_invoice ON DATE(inv.invoice_date) = dd_invoice.full_date LEFT JOIN greencity_dm.dim_date dd_start ON DATE(il.period_start) = dd_start.full_date LEFT JOIN greencity_dm.dim_date dd_end ON DATE(il.period_end) = dd_end.full_date LEFT JOIN greencity_dm.dim_date dd_payment ON DATE(tip.last_payment_date) = dd_payment.full_date INNER JOIN greencity_dm.dim_client dc ON inv.client_id = dc.client_id INNER JOIN greencity_dm.dim_building db ON inv.building_id = db.building_id INNER JOIN greencity_dm.dim_energy_type det ON il.energy_type = det.energy_type_code INNER JOIN greencity_dm.dim_invoice_status dis ON COALESCE(NULLIF(inv.status, ''), 'sent') = dis.status_code LEFT JOIN greencity_dm.dim_payment_method dpm ON tip.last_payment_method = dpm.method_code</sql>
+    <executed_each_row>N</executed_each_row>
+    <single_statement>N</single_statement>
+    <replace_variables>N</replace_variables>
+    <quote_string>N</quote_string>
+    <set_params>N</set_params>
+    <insert_field>insert_field</insert_field>
+    <update_field>update_field</update_field>
+    <delete_field>delete_field</delete_field>
+    <read_field>read_field</read_field>
+    <cluster_schema/>
+    <remotesteps><input/><output/></remotesteps>
+    <GUI><xloc>128</xloc><yloc>128</yloc><draw>Y</draw></GUI>
+  </step>
+
+  <step>
+    <name>Show results</name>
+    <type>TableInput</type>
+    <description>Show summary of loaded data</description>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+    <partitioning><method>none</method><schema_name/></partitioning>
+    <connection>dm_mysql</connection>
+    <sql>SELECT 'fact_economic_profitability' AS table_name, COUNT(*) AS row_count, SUM(revenue_ttc) AS total_revenue, SUM(line_margin) AS total_margin, AVG(payment_rate) AS avg_payment_rate FROM fact_economic_profitability</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+    <row_limit>0</row_limit>
+    <outer_join>N</outer_join>
+    <cluster_schema/>
+    <remotesteps><input/><output/></remotesteps>
+    <GUI><xloc>352</xloc><yloc>128</yloc><draw>Y</draw></GUI>
+  </step>
+
+  <step_error_handling/>
+  <slave-step-copy-partition-distribution/>
+  <slave_transformation>N</slave_transformation>
+  <attributes/>
+</transformation>
+
