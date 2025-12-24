@@ -110,3 +110,4 @@ CREATE TABLE IF NOT EXISTS fact_energy_consumption (
 
 
 
+

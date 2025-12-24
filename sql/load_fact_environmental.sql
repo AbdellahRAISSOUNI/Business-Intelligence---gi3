@@ -38,3 +38,4 @@ SELECT
     MAX(report_date_key) AS max_date_key
 FROM fact_environmental_impact;
 
+

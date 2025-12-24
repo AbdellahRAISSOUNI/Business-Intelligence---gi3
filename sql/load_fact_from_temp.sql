@@ -33,3 +33,4 @@ SELECT
     MAX(date_key) AS max_date_key
 FROM fact_energy_consumption;
 
+

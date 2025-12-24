@@ -28,3 +28,4 @@ To schedule with Windows Task Scheduler:
 Example command for pan.bat:
 "C:\pentaho\data-integration\pan.bat" /file:"pdi_jobs\etl_full_pipeline.kjb" /level:Basic
 
+

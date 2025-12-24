@@ -65,3 +65,4 @@ ON DUPLICATE KEY UPDATE
 -- Clean up temp table
 TRUNCATE TABLE greencity_dm.temp_consumption;
 
+

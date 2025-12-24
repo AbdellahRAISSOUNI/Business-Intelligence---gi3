@@ -52,3 +52,4 @@ SELECT MIN(date_key), MAX(date_key) FROM fact_energy_consumption;
 
 Expected: 180 rows (60 per energy type)
 
+

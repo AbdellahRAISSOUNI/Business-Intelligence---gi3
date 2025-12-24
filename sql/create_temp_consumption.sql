@@ -12,3 +12,4 @@ CREATE TABLE IF NOT EXISTS temp_consumption (
   INDEX idx_energy_type (energy_type)
 ) ENGINE=MEMORY;
 
+

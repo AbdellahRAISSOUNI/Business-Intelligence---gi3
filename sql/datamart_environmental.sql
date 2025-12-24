@@ -36,3 +36,4 @@ CREATE TABLE IF NOT EXISTS fact_environmental_impact (
 --          FROM fact_environmental_impact fei
 --          JOIN fact_energy_consumption fec ON fei.building_key = fec.building_key AND fei.report_date_key = fec.date_key
 
+
