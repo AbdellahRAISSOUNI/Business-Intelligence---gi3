@@ -1,0 +1,938 @@
+\documentclass[12pt,a4paper]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\usepackage{enumitem}
+
+% Configuration de la page
+\geometry{left=2.5cm,right=2.5cm,top=3cm,bottom=3cm}
+
+% Configuration des liens
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    pdftitle={Rapport Projet BI GreenCity},
+    pdfauthor={Raissouni Abdellah et Bencaid Mouad}
+}
+
+% Configuration du code
+\lstset{
+    language=SQL,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    commentstyle=\color{green!60!black},
+    stringstyle=\color{red},
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    stepnumber=1,
+    numbersep=5pt,
+    backgroundcolor=\color{gray!10},
+    frame=single,
+    breaklines=true,
+    breakatwhitespace=true,
+    tabsize=2,
+    showstringspaces=false
+}
+
+% Configuration des en-têtes et pieds de page
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\leftmark}
+\fancyhead[R]{\thepage}
+\fancyfoot[C]{Projet Business Intelligence - GreenCity}
+
+% Configuration des titres de section
+\titleformat{\chapter}[display]
+{\normalfont\huge\bfseries}{\chaptertitlename\ \thechapter}{20pt}{\Huge}
+\titlespacing*{\chapter}{0pt}{50pt}{40pt}
+
+% Commande pour les images
+\newcommand{\imagewithcaption}[3]{
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=#2\textwidth]{#1}
+        \caption{#3}
+        \label{fig:#1}
+    \end{figure}
+}
+
+% Début du document
+\begin{document}
+
+% Page de titre
+\begin{titlepage}
+    \centering
+    \vspace*{2cm}
+    
+    {\huge\bfseries Rapport de Projet}\\[1cm]
+    {\LARGE\bfseries Business Intelligence}\\[0.5cm]
+    {\Large Système Décisionnel pour la Gestion Énergétique}\\[0.5cm]
+    {\Large des Bâtiments Intelligents}\\[2cm]
+    
+    {\large \textbf{GreenCity}}\\[3cm]
+    
+    \begin{minipage}{0.4\textwidth}
+        \begin{flushleft}
+            \large
+            \textbf{Auteurs:}\\
+            Raissouni Abdellah\\
+            Bencaid Mouad
+        \end{flushleft}
+    \end{minipage}
+    ~
+    \begin{minipage}{0.4\textwidth}
+        \begin{flushright}
+            \large
+            \textbf{Encadrant:}\\
+            Y. EL YOUNOUSSI\\
+            \vspace{0.5cm}
+            \textbf{Année:}\\
+            2025-2026\\
+            \vspace{0.5cm}
+            \textbf{Cycle:}\\
+            3ème année Cycle d'ingénieurs - GI
+        \end{flushright}
+    \end{minipage}\\[4cm]
+    
+    \vfill
+    
+    {\large Janvier 2025}
+\end{titlepage}
+
+% Page blanche
+\newpage
+\thispagestyle{empty}
+\mbox{}
+
+% Table des matières
+\tableofcontents
+\newpage
+
+% Liste des figures
+\listoffigures
+\newpage
+
+% Liste des tableaux
+\listoftables
+\newpage
+
+% Résumé / Abstract
+\chapter*{Résumé}
+\addcontentsline{toc}{chapter}{Résumé}
+
+Ce rapport présente la conception et la mise en œuvre d'un système décisionnel complet pour l'entreprise fictive GreenCity, spécialisée dans la gestion énergétique des bâtiments intelligents. Le projet consiste à développer une solution Business Intelligence permettant de centraliser et d'analyser des données hétérogènes provenant de multiples sources (fichiers JSON, CSV et base de données MySQL opérationnelle).
+
+Le système implémenté comprend trois Data Marts indépendants basés sur un schéma en étoile, chacun dédié à un axe d'analyse spécifique : la consommation énergétique, la rentabilité économique et l'impact environnemental. Le processus ETL (Extract, Transform, Load) a été automatisé à l'aide de Pentaho Data Integration (PDI) et de scripts Python, permettant un chargement quotidien des données via le Planificateur de tâches Windows.
+
+La couche de reporting utilise Power BI Desktop pour créer des tableaux de bord interactifs offrant une visualisation complète des indicateurs de performance clés (KPI). Les résultats obtenus démontrent la capacité du système à fournir des analyses multidimensionnelles pour améliorer la prise de décision stratégique.
+
+\textbf{Mots-clés:} Business Intelligence, Data Warehouse, Data Mart, ETL, Pentaho Data Integration, Power BI, Schéma en étoile
+
+% Introduction
+\chapter{Introduction}
+
+\section{Contexte du Projet}
+
+Dans un contexte où la gestion énergétique et environnementale devient un enjeu majeur pour les entreprises, GreenCity, une entreprise fictive gérant plusieurs bâtiments intelligents répartis sur différentes régions, nécessite un système décisionnel complet pour optimiser ses opérations. Les défis actuels incluent :
+
+\begin{itemize}
+    \item La diversité des sources de données (systèmes IoT, facturation, rapports environnementaux)
+    \item Le besoin d'une vision unifiée pour la prise de décision
+    \item La nécessité d'analyses multidimensionnelles sur la consommation, la rentabilité et l'impact environnemental
+\end{itemize}
+
+\section{Objectifs du Projet}
+
+Ce projet vise à concevoir et implémenter un système Business Intelligence complet permettant de :
+
+\begin{enumerate}
+    \item \textbf{Extraire} des données depuis des sources hétérogènes (fichiers JSON, CSV et base de données MySQL)
+    \item \textbf{Transformer} et nettoyer ces données pour assurer leur qualité et cohérence
+    \item \textbf{Charger} les données dans trois Data Marts indépendants suivant un schéma en étoile
+    \item \textbf{Automatiser} le processus ETL pour une exécution quotidienne sans intervention humaine
+    \item \textbf{Visualiser} les données à travers des tableaux de bord interactifs dans Power BI
+\end{enumerate}
+
+\section{Structure du Rapport}
+
+Ce rapport est organisé comme suit :
+
+\begin{itemize}
+    \item Le \textbf{Chapitre 2} présente l'architecture globale du système
+    \item Le \textbf{Chapitre 3} décrit la modélisation et la conception des bases de données
+    \item Le \textbf{Chapitre 4} détaille le processus ETL et son implémentation
+    \item Le \textbf{Chapitre 5} expose l'automatisation du processus ETL
+    \item Le \textbf{Chapitre 6} présente la couche de reporting et les tableaux de bord Power BI
+    \item Le \textbf{Chapitre 7} conclut le rapport et présente les perspectives d'évolution
+\end{itemize}
+
+% Architecture du Système
+\chapter{Architecture du Système}
+
+\section{Vue d'Ensemble}
+
+Le système développé suit une architecture en couches classique d'un entrepôt de données (Data Warehouse), avec une séparation claire entre les sources de données, la zone de staging, le processus ETL, le Data Warehouse et la couche de reporting.
+
+\section{Architecture en Couches}
+
+\subsection{Sources de Données}
+
+Le système intègre trois types de sources de données hétérogènes :
+
+\begin{enumerate}
+    \item \textbf{Système IoT} : Fichiers JSON contenant les données de consommation énergétique collectées automatiquement chaque heure par les capteurs installés dans les bâtiments
+    \item \textbf{Système de facturation} : Base de données MySQL relationnelle contenant les données opérationnelles (clients, factures, paiements, bâtiments, régions, compteurs)
+    \item \textbf{Rapports environnementaux} : Fichiers CSV contenant les indicateurs écologiques (émissions CO$_2$, taux de recyclage) avec une fréquence mensuelle
+\end{enumerate}
+
+\imagewithcaption{images/architecture_globale.png}{0.9}{Architecture globale du système GreenCity BI montrant le flux de données depuis les sources jusqu'aux tableaux de bord}
+
+\subsection{Zone de Staging}
+
+La zone de staging (staging area) constitue une étape intermédiaire cruciale dans le processus ETL. Elle stocke les données extraites dans des fichiers CSV standardisés avant leur transformation et leur chargement dans le Data Warehouse. Cette approche présente plusieurs avantages :
+
+\begin{itemize}
+    \item Isolation des sources de données opérationnelles
+    \item Possibilité de re-exécuter les transformations sans re-extraire depuis les sources
+    \item Facilitation du débogage et de la traçabilité
+\end{itemize}
+
+\subsection{Processus ETL}
+
+Le processus ETL (Extract, Transform, Load) constitue le cœur du système. Notre implémentation utilise une approche hybride combinant :
+
+\begin{itemize}
+    \item \textbf{Pentaho Data Integration (PDI)} : Pour l'extraction des données JSON, la transformation et le chargement des dimensions et faits
+    \item \textbf{Python} : Pour le parsing des fichiers CSV au format fixe et le chargement dans des tables temporaires
+    \item \textbf{SQL} : Pour les requêtes complexes avec jointures et agrégations lors du chargement des tables de faits
+\end{itemize}
+
+\imagewithcaption{images/etl_process.png}{0.9}{Diagramme du processus ETL montrant les différentes étapes d'extraction, transformation et chargement}
+
+\subsection{Data Warehouse}
+
+Le Data Warehouse est organisé en trois Data Marts indépendants, chacun suivant un schéma en étoile (star schema) optimisé pour les analyses analytiques :
+
+\begin{enumerate}
+    \item \textbf{Data Mart Consommation Énergétique} : Analyse de la consommation d'électricité, eau et gaz
+    \item \textbf{Data Mart Rentabilité Économique} : Analyse financière (revenus, marges, taux de paiement)
+    \item \textbf{Data Mart Impact Environnemental} : Analyse des émissions CO$_2$ et du taux de recyclage
+\end{enumerate}
+
+\subsection{Couche de Reporting}
+
+La couche de reporting utilise Power BI Desktop pour créer des tableaux de bord interactifs permettant :
+
+\begin{itemize}
+    \item La visualisation des indicateurs de performance clés (KPI)
+    \item L'analyse multidimensionnelle via des filtres et des segments (slicers)
+    \item L'exploration interactive des données par les utilisateurs métier
+\end{itemize}
+
+% Conception de la Base de Données
+\chapter{Conception de la Base de Données}
+
+\section{Base de Données Opérationnelle}
+
+La base de données opérationnelle \texttt{greencity\_operational} stocke les données transactionnelles issues des systèmes métier. Elle suit un modèle relationnel normalisé classique.
+
+\subsection{Schéma Relationnel}
+
+Les principales tables de la base opérationnelle sont :
+
+\begin{itemize}
+    \item \texttt{regions} : Informations géographiques sur les régions
+    \item \texttt{clients} : Données des clients
+    \item \texttt{buildings} : Caractéristiques des bâtiments (nom, type, surface, région, client)
+    \item \texttt{meters} : Informations sur les compteurs d'énergie (type, unité, date d'installation)
+    \item \texttt{invoices} : En-têtes de factures (dates, montants, statut)
+    \item \texttt{invoice\_lines} : Lignes de factures (consommation, prix unitaire, montants)
+    \item \texttt{payments} : Enregistrements des paiements (date, montant, méthode)
+\end{itemize}
+
+\imagewithcaption{images/schema_operational.png}{0.9}{Schéma relationnel de la base de données opérationnelle}
+
+\section{Data Warehouse}
+
+Le Data Warehouse \texttt{greencity\_dm} utilise une architecture dimensionnelle avec des schémas en étoile pour chaque Data Mart.
+
+\subsection{Schéma en Étoile}
+
+Le schéma en étoile est composé de :
+
+\begin{itemize}
+    \item \textbf{Une table de faits} : Contient les mesures (mesures numériques) à analyser
+    \item \textbf{Des tables de dimensions} : Contiennent les attributs descriptifs pour analyser les faits
+\end{itemize}
+
+Cette structure permet des requêtes analytiques performantes grâce à des jointures simples entre la table de faits et les dimensions.
+
+\subsection{Tables de Dimensions Partagées}
+
+Plusieurs dimensions sont partagées entre les Data Marts :
+
+\begin{description}
+    \item[\texttt{dim\_date}] Dimension temporelle avec des attributs hiérarchiques (année, trimestre, mois, jour)
+    \item[\texttt{dim\_region}] Dimension géographique des régions
+    \item[\texttt{dim\_client}] Dimension des clients
+    \item[\texttt{dim\_building}] Dimension des bâtiments avec références aux dimensions région et client
+    \item[\texttt{dim\_energy\_type}] Dimension des types d'énergie (électricité, eau, gaz)
+    \item[\texttt{dim\_meter}] Dimension des compteurs avec références aux dimensions building et energy\_type
+\end{description}
+
+\imagewithcaption{images/dimensions_shared.png}{0.9}{Diagramme des dimensions partagées entre les Data Marts}
+
+\subsection{Data Mart 1 : Consommation Énergétique}
+
+\subsubsection{Table de Faits : \texttt{fact\_energy\_consumption}}
+
+Cette table stocke les mesures de consommation énergétique provenant des capteurs IoT. La granularité est d'un enregistrement par mesure de compteur par heure.
+
+\textbf{Clés de dimension :}
+\begin{itemize}
+    \item \texttt{date\_key} : Clé de la dimension date
+    \item \texttt{meter\_key} : Clé de la dimension compteur
+    \item \texttt{building\_key}, \texttt{client\_key}, \texttt{region\_key} : Clés dénormalisées pour améliorer les performances
+    \item \texttt{energy\_type\_key} : Type d'énergie
+\end{itemize}
+
+\textbf{Mesures :}
+\begin{itemize}
+    \item \texttt{consumption\_value} : Valeur de consommation dans l'unité originale (kWh ou m$^3$)
+    \item \texttt{consumption\_kwh} : Consommation normalisée en kWh (NULL pour les non-électricité)
+\end{itemize}
+
+\imagewithcaption{images/datamart_consumption.png}{0.9}{Schéma en étoile du Data Mart Consommation Énergétique}
+
+\subsection{Data Mart 2 : Rentabilité Économique}
+
+\subsubsection{Dimensions Supplémentaires}
+
+\begin{itemize}
+    \item \texttt{dim\_invoice\_status} : Statuts des factures (envoyée, payée, en retard, annulée)
+    \item \texttt{dim\_payment\_method} : Méthodes de paiement (virement, carte, espèces, chèque)
+\end{itemize}
+
+\subsubsection{Table de Faits : \texttt{fact\_economic\_profitability}}
+
+Cette table a une granularité d'une ligne par ligne de facture, permettant d'analyser la rentabilité par type d'énergie.
+
+\textbf{Clés de dimension temporelles :}
+\begin{itemize}
+    \item \texttt{invoice\_date\_key} : Date de la facture
+    \item \texttt{period\_start\_key}, \texttt{period\_end\_key} : Période de consommation facturée
+    \item \texttt{payment\_date\_key} : Date de paiement (nullable)
+\end{itemize}
+
+\textbf{Mesures :}
+\begin{itemize}
+    \item \texttt{revenue\_ttc} : Chiffre d'affaires TTC (ligne de facture)
+    \item \texttt{revenue\_ht} : Chiffre d'affaires HT
+    \item \texttt{line\_margin} : Marge de la ligne = revenue\_ttc - coût énergétique proportionnel
+    \item \texttt{margin\_percentage} : Pourcentage de marge
+    \item \texttt{invoice\_amount\_paid} : Montant total payé pour la facture
+    \item \texttt{line\_amount\_paid} : Montant proportionnel payé pour cette ligne
+    \item \texttt{payment\_rate} : Taux de recouvrement (pourcentage)
+\end{itemize}
+
+\imagewithcaption{images/datamart_economic.png}{0.9}{Schéma en étoile du Data Mart Rentabilité Économique}
+
+\subsection{Data Mart 3 : Impact Environnemental}
+
+\subsubsection{Table de Faits : \texttt{fact\_environmental\_impact}}
+
+Cette table stocke les rapports environnementaux mensuels par bâtiment.
+
+\textbf{Clés de dimension :}
+\begin{itemize}
+    \item \texttt{report\_date\_key} : Date du rapport
+    \item \texttt{building\_key} : Bâtiment concerné
+    \item \texttt{region\_key} : Région (via building)
+\end{itemize}
+
+\textbf{Mesures :}
+\begin{itemize}
+    \item \texttt{emission\_co2\_kg} : Émissions de CO$_2$ en kilogrammes
+    \item \texttt{taux\_recyclage} : Taux de recyclage (0.00 à 1.00)
+    \item \texttt{taux\_recyclage\_pct} : Taux de recyclage en pourcentage (0 à 100)
+\end{itemize}
+
+\imagewithcaption{images/datamart_environmental.png}{0.9}{Schéma en étoile du Data Mart Impact Environnemental}
+
+% Processus ETL
+\chapter{Processus ETL}
+
+\section{Architecture ETL}
+
+Le processus ETL a été implémenté en utilisant une approche hybride combinant les forces de différents outils pour optimiser les performances et résoudre les limitations techniques rencontrées.
+
+\subsection{Stratégie Hybride}
+
+Notre stratégie combine :
+
+\begin{enumerate}
+    \item \textbf{PDI (Pentaho Data Integration)} : Pour l'extraction JSON, la modélisation dimensionnelle et l'orchestration
+    \item \textbf{Python} : Pour le parsing des fichiers CSV au format fixe
+    \item \textbf{SQL} : Pour les requêtes complexes avec agrégations et jointures
+\end{enumerate}
+
+Cette approche permet de contourner les limitations de PDI avec certains formats de fichiers tout en conservant la puissance de l'outil pour la modélisation dimensionnelle.
+
+\section{Phase 1 : Extraction}
+
+\subsection{Extraction des Fichiers JSON}
+
+Les fichiers JSON provenant du système IoT sont extraits à l'aide de transformations PDI utilisant le step "JSON Input". Cette étape permet de :
+
+\begin{itemize}
+    \item Lire les fichiers JSON imbriqués (structure : région $\rightarrow$ bâtiments $\rightarrow$ mesures)
+    \item Aplatir la structure hiérarchique pour obtenir une ligne par mesure
+    \item Extraire les champs nécessaires (compteur\_id, date\_mesure, consommation)
+\end{itemize}
+
+\imagewithcaption{images/pdi_json_extraction.png}{0.8}{Transformation PDI pour l'extraction des données JSON de consommation}
+
+\subsection{Sortie vers la Zone de Staging}
+
+Les données extraites sont écrites dans des fichiers CSV de staging au format fixe (sans séparateurs), optimisé pour le traitement ultérieur :
+
+\begin{lstlisting}[caption=Format de sortie staging, language=]
+MTR00012025-01-14T08:00:00146.7
+MTR00012025-01-14T09:00:00148.2
+\end{lstlisting}
+
+Format : \texttt{compteur\_id (7) + date\_mesure (19) + consommation (reste)}
+
+\section{Phase 2 : Transformation et Chargement des Dimensions}
+
+\subsection{Chargement des Dimensions Simples}
+
+Les dimensions simples (\texttt{dim\_region}, \texttt{dim\_client}, \texttt{dim\_energy\_type}) sont chargées directement depuis la base opérationnelle ou définies manuellement.
+
+\imagewithcaption{images/load_dim_region.png}{0.7}{Transformation PDI pour le chargement de dim\_region}
+
+\subsection{Chargement des Dimensions avec Références}
+
+Pour les dimensions nécessitant des jointures (comme \texttt{dim\_building} qui référence \texttt{dim\_region} et \texttt{dim\_client}), nous utilisons une approche SQL directe avec JOIN au lieu de Database Lookup pour :
+
+\begin{itemize}
+    \item Éviter les problèmes de dépendances de plugins PDI
+    \item Améliorer les performances pour de grands volumes
+    \item Simplifier la transformation
+\end{itemize}
+
+\begin{lstlisting}[caption=Exemple de chargement dim\_building avec JOINs, language=SQL]
+SELECT 
+    b.building_id,
+    b.building_name,
+    b.building_type,
+    b.surface_m2,
+    dr.region_key,
+    dc.client_key
+FROM greencity_operational.buildings b
+LEFT JOIN greencity_dm.dim_region dr 
+    ON b.region_id = dr.region_id
+LEFT JOIN greencity_dm.dim_client dc 
+    ON b.client_id = dc.client_id
+\end{lstlisting}
+
+\subsection{Génération de la Dimension Date}
+
+La dimension \texttt{dim\_date} est générée dynamiquement via une requête SQL qui crée toutes les dates de 2024 à 2026 avec leurs attributs temporels :
+
+\begin{lstlisting}[caption=Génération de dim\_date, language=SQL]
+SELECT 
+    CAST(DATE_FORMAT(dt.full_date, '%Y%m%d') AS UNSIGNED) AS date_key,
+    dt.full_date AS full_date,
+    CAST(YEAR(dt.full_date) AS SIGNED) AS year,
+    CAST(QUARTER(dt.full_date) AS SIGNED) AS quarter,
+    CAST(MONTH(dt.full_date) AS SIGNED) AS month,
+    DATE_FORMAT(dt.full_date, '%M') AS month_name,
+    CAST(DAY(dt.full_date) AS SIGNED) AS day,
+    CAST(DAYOFWEEK(dt.full_date) AS SIGNED) AS day_of_week,
+    DATE_FORMAT(dt.full_date, '%W') AS day_name
+FROM (
+    SELECT DATE('2024-01-01') + INTERVAL 
+        (a.a + (10 * b.a) + (100 * c.a) + (1000 * d.a)) DAY AS full_date
+    FROM (SELECT 0 AS a UNION SELECT 1 UNION ...) AS a
+    CROSS JOIN ...
+) AS dt
+WHERE dt.full_date BETWEEN '2024-01-01' AND '2026-12-31'
+\end{lstlisting}
+
+\section{Phase 3 : Chargement des Tables de Faits}
+
+\subsection{Chargement de fact\_energy\_consumption}
+
+\subsubsection{Approche Python pour le Parsing CSV}
+
+En raison des limitations de PDI avec les fichiers au format fixe, nous utilisons un script Python pour parser les CSV de staging et charger les données dans une table temporaire \texttt{temp\_consumption} :
+
+\begin{lstlisting}[caption=Extrait du script Python, language=Python]
+def parse_line(line):
+    """Parse une ligne au format fixe"""
+    pattern = r'^(MTR\d+)(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2})([\d.]+)$'
+    match = re.match(pattern, line)
+    if match:
+        compteur_id = match.group(1)
+        date_str = match.group(2)
+        consommation_str = match.group(3)
+        return (compteur_id, date_str, consommation_str)
+    return None
+\end{lstlisting}
+
+\subsubsection{Chargement Final via SQL}
+
+Une fois la table temporaire remplie, une requête SQL avec jointures charge les données dans la table de faits en résolvant toutes les clés de dimension :
+
+\begin{lstlisting}[caption=Chargement fact\_energy\_consumption, language=SQL]
+INSERT INTO fact_energy_consumption 
+    (date_key, meter_key, building_key, client_key, 
+     region_key, energy_type_key, consumption_value, consumption_kwh)
+SELECT 
+    dd.date_key,
+    dm.meter_key,
+    db.building_key,
+    db.client_key,
+    db.region_key,
+    dm.energy_type_key,
+    tc.consommation AS consumption_value,
+    CASE 
+        WHEN det.energy_type_code = 'electricite' 
+        THEN tc.consommation 
+        ELSE NULL 
+    END AS consumption_kwh
+FROM temp_consumption tc
+INNER JOIN dim_meter dm ON tc.compteur_id = dm.meter_id
+INNER JOIN dim_energy_type det 
+    ON dm.energy_type_key = det.energy_type_key 
+    AND det.energy_type_code = tc.energy_type
+INNER JOIN dim_building db ON dm.building_key = db.building_key
+INNER JOIN dim_date dd ON DATE(tc.date_mesure) = dd.full_date
+\end{lstlisting}
+
+\imagewithcaption{images/fact_consumption_loading.png}{0.8}{Diagramme du processus de chargement de fact\_energy\_consumption}
+
+\subsection{Chargement de fact\_economic\_profitability}
+
+Cette table nécessite des calculs complexes incluant :
+
+\begin{itemize}
+    \item Agrégation des paiements par facture
+    \item Calcul de marge proportionnelle par ligne de facture
+    \item Calcul du taux de recouvrement
+\end{itemize}
+
+\begin{lstlisting}[caption=Calcul de la marge par ligne, language=SQL]
+-- Marge de ligne = revenue_ttc - (coût énergétique proportionnel)
+(il.line_ttc - (il.line_ttc / NULLIF(inv.total_ttc, 0) * inv.energy_cost)) 
+    AS line_margin,
+
+-- Pourcentage de marge
+CASE 
+    WHEN il.line_ttc > 0 THEN 
+        ((il.line_ttc - (il.line_ttc / NULLIF(inv.total_ttc, 0) * 
+            inv.energy_cost)) / il.line_ttc) * 100
+    ELSE 0 
+END AS margin_percentage
+\end{lstlisting}
+
+\imagewithcaption{images/fact_economic_loading.png}{0.8}{Transformation PDI pour le chargement de fact\_economic\_profitability}
+
+\subsection{Chargement de fact\_environmental\_impact}
+
+Les données environnementales sont chargées directement depuis le fichier CSV source via un script Python qui effectue les jointures avec les dimensions :
+
+\begin{lstlisting}[caption=Chargement environnemental, language=Python]
+insert_sql = """
+    INSERT INTO fact_environmental_impact (
+        report_date_key, building_key, region_key,
+        emission_co2_kg, taux_recyclage, taux_recyclage_pct
+    )
+    SELECT 
+        dd.date_key,
+        db.building_key,
+        db.region_key,
+        %s, %s, %s * 100
+    FROM greencity_dm.dim_date dd
+    INNER JOIN greencity_dm.dim_building db 
+        ON %s = db.building_id
+    WHERE DATE(%s) = dd.full_date
+"""
+\end{lstlisting}
+
+\section{Orchestration ETL}
+
+Un job PDI principal (\texttt{etl\_full\_pipeline.kjb}) orchestre l'exécution séquentielle des transformations de chargement des tables de faits :
+
+\imagewithcaption{images/etl_job.png}{0.9}{Job PDI d'orchestration du pipeline ETL complet}
+
+% Automatisation
+\chapter{Automatisation du Processus ETL}
+
+\section{Nécessité de l'Automatisation}
+
+Pour garantir la fraîcheur des données et réduire l'intervention manuelle, le processus ETL doit s'exécuter automatiquement à une fréquence régulière. Dans notre cas, nous avons choisi une exécution quotidienne à 2h00 du matin.
+
+\section{Implémentation}
+
+\subsection{Script Batch Windows}
+
+Un script batch (\texttt{run\_etl.bat}) coordonne l'exécution complète du pipeline :
+
+\begin{enumerate}
+    \item Exécution du script Python pour charger les données de consommation dans la table temporaire
+    \item Exécution du script Python pour charger les données environnementales
+    \item Exécution du job PDI via \texttt{pan.bat} pour charger les tables de faits
+\end{enumerate}
+
+\imagewithcaption{images/batch_script.png}{0.7}{Extrait du script batch d'automatisation}
+
+\subsection{Planificateur de Tâches Windows}
+
+Le script batch est configuré dans le Planificateur de tâches Windows pour :
+
+\begin{itemize}
+    \item S'exécuter quotidiennement à 2h00
+    \item S'exécuter même si l'utilisateur n'est pas connecté
+    \item Journaliser les erreurs pour le débogage
+\end{itemize}
+
+\imagewithcaption{images/task_scheduler.png}{0.8}{Configuration du Planificateur de tâches Windows}
+
+\section{Gestion des Erreurs}
+
+Le script batch inclut une gestion d'erreurs basique qui :
+
+\begin{itemize}
+    \item Vérifie le code de retour de chaque étape
+    \item Arrête l'exécution en cas d'erreur
+    \item Affiche des messages d'erreur clairs
+\end{itemize}
+
+Pour un environnement de production, il serait recommandé d'ajouter :
+
+\begin{itemize}
+    \item Un système de notification (email, SMS)
+    \item Un logging détaillé dans des fichiers
+    \item Une gestion de retry automatique
+\end{itemize}
+
+% Reporting et Tableaux de Bord
+\chapter{Reporting et Tableaux de Bord}
+
+\section{Connexion à Power BI}
+
+\subsection{Configuration de la Connexion}
+
+Power BI Desktop est connecté au Data Warehouse MySQL via le driver ODBC MySQL Connector 8.0. La connexion utilise le mode "Import" pour de meilleures performances, chargeant les données localement dans le modèle Power BI.
+
+\imagewithcaption{images/powerbi_connection.png}{0.7}{Configuration de la connexion Power BI à MySQL}
+
+\section{Modèle de Données}
+
+\subsection{Relations entre Tables}
+
+Power BI détecte automatiquement les relations entre les tables de faits et de dimensions basées sur les clés étrangères. Le modèle résultant suit la structure du schéma en étoile :
+
+\imagewithcaption{images/powerbi_model.png}{0.9}{Vue du modèle de données dans Power BI montrant les relations entre tables}
+
+\subsection{Mesures DAX}
+
+Des mesures calculées ont été créées en DAX (Data Analysis Expressions) pour les indicateurs de performance clés :
+
+\begin{lstlisting}[caption=Exemples de mesures DAX, language=]
+-- Consommation totale en kWh
+Total Consumption (kWh) = SUM([consumption_kwh])
+
+-- Revenu total
+Total Revenue = SUM([revenue_ttc])
+
+-- Marge totale
+Total Margin = SUM([line_margin])
+
+-- Taux de paiement moyen
+Payment Rate = AVERAGE([payment_rate])
+
+-- Émissions CO2 totales
+Total CO2 Emissions = SUM([emission_co2_kg])
+
+-- Taux de recyclage moyen
+Average Recycling Rate = AVERAGE([taux_recyclage_pct])
+\end{lstlisting}
+
+\section{Tableaux de Bord}
+
+\subsection{Dashboard 1 : Consommation Énergétique}
+
+Ce dashboard se concentre sur l'analyse de la consommation énergétique avec :
+
+\begin{itemize}
+    \item Carte KPI : Consommation totale (kWh)
+    \item Graphique linéaire : Évolution de la consommation dans le temps
+    \item Graphique en barres : Consommation par région
+    \item Graphique en barres : Consommation par bâtiment
+    \item Graphique en secteurs : Répartition par type d'énergie
+    \item Tableau : Top 10 des bâtiments par consommation
+\end{itemize}
+
+\imagewithcaption{images/dashboard_consumption.png}{0.9}{Tableau de bord Consommation Énergétique dans Power BI}
+
+\subsection{Dashboard 2 : Rentabilité Économique}
+
+Ce dashboard analyse la performance financière avec :
+
+\begin{itemize}
+    \item Cartes KPI : Revenu total, Marge totale, Taux de paiement
+    \item Graphique linéaire : Évolution des revenus dans le temps
+    \item Graphiques en barres : Revenus par région et par bâtiment
+    \item Tableau : Top 10 des clients les plus rentables
+    \item Graphique en barres : Marge par méthode de paiement
+\end{itemize}
+
+\imagewithcaption{images/dashboard_economic.png}{0.9}{Tableau de bord Rentabilité Économique dans Power BI}
+
+\subsection{Dashboard 3 : Impact Environnemental}
+
+Ce dashboard présente les indicateurs environnementaux :
+
+\begin{itemize}
+    \item Cartes KPI : Émissions CO$_2$ totales, Taux de recyclage moyen
+    \item Graphique linéaire : Évolution des émissions CO$_2$ dans le temps
+    \item Graphique en barres : Émissions par région
+    \item Graphique en barres : Top 10 des bâtiments les plus polluants
+    \item Graphique en donut : Répartition du taux de recyclage
+    \item Graphique en nuage de points : Ratio CO$_2$ / Consommation (optionnel)
+\end{itemize}
+
+\imagewithcaption{images/dashboard_environmental.png}{0.9}{Tableau de bord Impact Environnemental dans Power BI}
+
+\subsection{Dashboard 4 : Vue d'Ensemble}
+
+Ce dashboard combine tous les indicateurs clés pour une vision globale :
+
+\begin{itemize}
+    \item Ligne de cartes KPI : Consommation totale, Revenu total, CO$_2$ total
+    \item Graphique linéaire multi-séries : Toutes les métriques dans le temps
+    \item Matrice : Comparaison régionale de tous les indicateurs
+    \item Filtres (Slicers) : Période, Région, Bâtiment, Client
+\end{itemize}
+
+\imagewithcaption{images/dashboard_overview.png}{0.9}{Tableau de bord Vue d'Ensemble dans Power BI}
+
+\section{Interactivité}
+
+Tous les tableaux de bord sont interactifs grâce à :
+
+\begin{itemize}
+    \item \textbf{Filtres (Slicers)} : Permettent de filtrer toutes les visualisations par période, région, bâtiment ou client
+    \item \textbf{Cross-filtering} : La sélection d'un élément dans une visualisation met en évidence les données associées dans les autres visualisations
+    \item \textbf{Drill-through} : Possibilité de naviguer vers des pages de détail en cliquant sur les éléments
+\end{itemize}
+
+\imagewithcaption{images/dashboard_interactivity.png}{0.8}{Démonstration de l'interactivité des tableaux de bord}
+
+% Conclusion
+\chapter{Conclusion et Perspectives}
+
+\section{Résultats Obtenus}
+
+Ce projet a permis de développer avec succès un système Business Intelligence complet répondant à tous les objectifs fixés :
+
+\begin{enumerate}
+    \item \textbf{Extraction réussie} depuis des sources hétérogènes (JSON, CSV, MySQL)
+    \item \textbf{Transformation et nettoyage} des données avec gestion des problèmes de qualité
+    \item \textbf{Chargement dans trois Data Marts} suivant un schéma en étoile optimisé
+    \item \textbf{Automatisation complète} du processus ETL pour exécution quotidienne
+    \item \textbf{Visualisation interactive} via des tableaux de bord Power BI complets
+\end{enumerate}
+
+\section{Apports Techniques}
+
+\subsection{Architecture}
+
+L'architecture mise en place présente plusieurs avantages :
+
+\begin{itemize}
+    \item \textbf{Modularité} : Les trois Data Marts indépendants permettent une évolution flexible
+    \item \textbf{Performance} : Le schéma en étoile optimise les requêtes analytiques
+    \item \textbf{Maintenabilité} : La séparation claire des couches facilite la maintenance
+\end{itemize}
+
+\subsection{Approche ETL Hybride}
+
+L'approche hybride combinant PDI, Python et SQL a permis de :
+
+\begin{itemize}
+    \item Résoudre les limitations techniques de PDI avec certains formats
+    \item Optimiser les performances en utilisant l'outil le plus adapté à chaque tâche
+    \item Maintenir la traçabilité et la documentation du processus
+\end{itemize}
+
+\section{Défis Rencontrés et Solutions}
+
+\subsection{Parsing de Fichiers au Format Fixe}
+
+\textbf{Problème :} PDI rencontrait des difficultés avec les fichiers CSV au format fixe sans séparateurs.
+
+\textbf{Solution :} Utilisation d'un script Python avec expressions régulières pour parser les fichiers et charger dans une table temporaire.
+
+\subsection{Gestion des Types de Données}
+
+\textbf{Problème :} Erreurs "Data truncated" lors du chargement de la dimension date.
+
+\textbf{Solution :} Cast explicite des champs SQL et utilisation du step "Select Values" dans PDI pour définir correctement les types.
+
+\subsection{Agrégations Complexes}
+
+\textbf{Problème :} Calcul de marge proportionnelle et agrégation des paiements nécessitant plusieurs jointures.
+
+\textbf{Solution :} Création de tables temporaires pour pré-agréger les données avant le chargement final.
+
+\section{Perspectives d'Évolution}
+
+Plusieurs améliorations pourraient être apportées au système :
+
+\subsection{Chargement Incrémental}
+
+Actuellement, le système effectue un chargement complet (truncate et reload). Pour améliorer les performances avec de gros volumes, on pourrait :
+
+\begin{itemize}
+    \item Ajouter des colonnes \texttt{last\_updated} dans les sources
+    \item Implémenter un système de tracking du dernier chargement
+    \item Filtrer les données à charger : \texttt{WHERE last\_updated > last\_load\_date}
+    \item Utiliser \texttt{INSERT/UPDATE} pour les dimensions et \texttt{INSERT IGNORE} pour les faits
+\end{itemize}
+
+\subsection{Qualité des Données}
+
+Pour un environnement de production :
+
+\begin{itemize}
+    \item Implémenter des règles de validation plus strictes
+    \item Créer une table de logs pour tracer les problèmes de qualité
+    \item Mettre en place des alertes automatiques en cas d'anomalies
+\end{itemize}
+
+\subsection{Performance}
+
+\begin{itemize}
+    \item Partitionner les grandes tables de faits par date
+    \item Créer des index additionnels sur les colonnes fréquemment filtrées
+    \item Mettre en cache les résultats de requêtes complexes
+    \item Utiliser des agrégations dans Power BI pour de très gros volumes
+\end{itemize}
+
+\subsection{Reporting Avancé}
+
+\begin{itemize}
+    \item Publication sur Power BI Service pour accès web
+    \item Création de rapports PDF automatisés
+    \item Alertes automatiques basées sur des seuils de KPI
+    \item Analyse prédictive avec Machine Learning
+\end{itemize}
+
+\section{Conclusion Générale}
+
+Ce projet a permis de mettre en pratique les concepts fondamentaux du Business Intelligence et des entrepôts de données. L'implémentation réussie d'un système complet, de l'extraction des données jusqu'à la visualisation, démontre la maîtrise des technologies et méthodologies modernes de BI.
+
+Le système développé constitue une base solide pour une solution décisionnelle en environnement professionnel, avec des perspectives claires d'évolution et d'amélioration continue.
+
+% Bibliographie
+\chapter*{Bibliographie}
+\addcontentsline{toc}{chapter}{Bibliographie}
+
+\begin{thebibliography}{99}
+
+\bibitem{kimball}
+Kimball, R., \& Ross, M. (2013). \textit{The Data Warehouse Toolkit: The Definitive Guide to Dimensional Modeling} (3rd ed.). Wiley.
+
+\bibitem{inmon}
+Inmon, W. H. (2005). \textit{Building the Data Warehouse} (4th ed.). Wiley.
+
+\bibitem{pentaho}
+Pentaho Corporation. (2024). \textit{Pentaho Data Integration Documentation}. \url{https://help.pentaho.com/}
+
+\bibitem{powerbi}
+Microsoft. (2024). \textit{Power BI Documentation}. \url{https://docs.microsoft.com/power-bi/}
+
+\bibitem{mysql}
+Oracle Corporation. (2024). \textit{MySQL 8.0 Reference Manual}. \url{https://dev.mysql.com/doc/}
+
+\bibitem{etl}
+Dreibelbis, A., Hechler, E., Milman, I., \& Wolfson, D. (2008). \textit{Enterprise Master Data Management: An SOA Approach to Managing Core Information}. IBM Press.
+
+\end{thebibliography}
+
+% Annexes
+\appendix
+
+\chapter{Annexe A : Structure Complète du Projet}
+
+La structure complète du projet est organisée comme suit :
+
+\begin{verbatim}
+Business Intelligence - Mini Projet/
+├── data_sources/          # Fichiers sources (JSON, CSV)
+│   ├── csv/
+│   │   ├── operational_seed/
+│   │   └── env_reports_01_2025.csv
+│   └── json/
+│       ├── Electricite_consumption_01_2025.json
+│       ├── Eau_consumption_01_2025.json
+│       └── Gaz_consumption_01_2025.json
+├── staging/               # Zone de staging (CSV extraits)
+├── sql/                   # Scripts SQL (DDL, DML)
+├── pdi_transforms/        # Transformations PDI (.ktr)
+├── pdi_jobs/              # Jobs PDI (.kjb)
+├── scripts/               # Scripts Python
+├── scheduler/             # Scripts d'automatisation
+├── reports/               # Documentation reporting
+└── docs/                  # Documentation projet
+\end{verbatim}
+
+\chapter{Annexe B : Commandes SQL Principales}
+
+\section{Création des Bases de Données}
+
+\begin{lstlisting}[caption=Création des bases de données, language=SQL]
+CREATE DATABASE greencity_operational;
+CREATE DATABASE greencity_dm;
+\end{lstlisting}
+
+\section{Vérification des Données}
+
+\begin{lstlisting}[caption=Requêtes de vérification, language=SQL]
+-- Nombre d'enregistrements dans les faits
+SELECT COUNT(*) FROM fact_energy_consumption;
+SELECT COUNT(*) FROM fact_economic_profitability;
+SELECT COUNT(*) FROM fact_environmental_impact;
+
+-- Vérification des dimensions
+SELECT COUNT(*) FROM dim_date;  -- Devrait être 1095 (3 ans)
+SELECT COUNT(*) FROM dim_region;
+SELECT COUNT(*) FROM dim_building;
+\end{lstlisting}
+
+\chapter{Annexe C : Captures d'Écran Supplémentaires}
+
+% Ajoutez ici d'autres captures d'écran si nécessaire
+% \imagewithcaption{images/screenshot1.png}{0.8}{Description}
+
+\end{document}
+
